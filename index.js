@@ -11,18 +11,17 @@ const sizes = [
   6144, 8192,
 ]
 
-const inputDir = path.resolve(process.argv[2] ?? './svg')
-const outputDir = path.resolve(process.argv[3] ?? './')
+const inputDir = path.resolve('./svg')
+const outputDir = path.resolve('./')
 types.forEach((type) => cleanDirSync(path.join(outputDir, type)))
 
 fs.readdirSync(inputDir)
   .filter((svg) => regex.test(svg))
   .forEach((svg) => {
     const input = path.join(inputDir, svg)
-    const base = svg.replace(regex, '')
 
     async function createFile(type, size) {
-      const fileName = `${base}-${size}.${type}`
+      const fileName = `${size}.${type}`
       const outputFile = path.join(outputDir, type, fileName)
 
       await sharp(input)
